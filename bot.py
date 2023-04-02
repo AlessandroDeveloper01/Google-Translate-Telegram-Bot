@@ -6,7 +6,7 @@ from aiogram.types import ReplyKeyboardRemove, \
     InlineKeyboardMarkup, InlineKeyboardButton
 import logging
 
-#функции перевода
+#funzioni di traduzione
 from googletrans import Translator
 import googletrans
 
@@ -15,35 +15,37 @@ translator=Translator()
 def translate_func(string,lang):
     return translator.translate(string, dest=str(lang))
 
-#бот
-logging.basicConfig(level=logging.INFO) #логи
+#Bot
+logging.basicConfig(level=logging.INFO) #log
 
-bot = Bot(token=config.TOKEN)
+bot = Bot(token="TOKEN")
 dp = Dispatcher(bot)
 
 global lang #lang - dest language, src language define auto
 
-#старт и клавиатура
+#avvio e tastiera
 @dp.message_handler(commands='start')
 async def start_message(message: types.Message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = ['Русский','Английский','Французский','Немецкий','Испанский','Португальский','Японский','Китайский']
+    buttons = ['Russo','Inglese','Francese','Tedesco','Spagnolo','Portoghese','Giapponese','Cinese','Persiano','Germania']
     keyboard.add(*buttons)
-    await message.answer('Я бот-переводчик, я переведу ваш текст на язык из списка',reply_markup=keyboard)
+    await message.answer("""Sono un bot traduttore, tradurrò il tuo testo nella lingua dall'elenco""",reply_markup=keyboard)
 
-#функции кнопок
-@dp.message_handler(lambda message: message.text=='Русский' or message.text=='Английский' or
-                    message.text=='Французский' or message.text=='Немецкий' or message.text=='Испанский' or 
-                    message.text=='Португальский' or message.text=='Японский' or message.text=='Китайский')
+#funzioni dei pulsanti
+@dp.message_handler(lambda message: message.text=='Russo' or message.text=='Inglese' or
+                    message.text=='Francese' or message.text=='Tedesco' or message.text=='Spagnolo' or 
+                    message.text=='Portoghese' or message.text=='Giapponese' or message.text=='Cinese' or message.text=="Persiano" or
+                    message.text=='Germania')
 async def dest_lang(message: types.Message):
     global lang
-    languages={'Русский':'ru','Английский':'en','Французский':'fr',
-                'Немецкий':'de','Испанский':'es','Португальский':'pt',
-                'Японский':'ja','Китайский':'zh-cn'}
+    languages={'Russo':'ru','Inglese':'en','Francese':'fr',
+                'Tedesco':'de','Spagnolo':'es','Portoghese':'pt',
+                'Giapponese':'ja','Cinese':'zh-cn',
+                'Persiano':'fa','Germania':'de'}
     lang=languages[message.text]
-    await message.reply('Что перевести?')
+    await message.reply('Cosa tradurre?')
 
-#перевод
+#traduzione
 @dp.message_handler()
 async def print_result(message:types.Message):
     global lang
