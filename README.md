@@ -1,3 +1,3 @@
 # Google-Translate-Telegram-Bot
-Для написания бота bспользовались библиотеки aiogram и googletrans
-bot telegram-username: @google_translate_botbot
+Per scrivere il bot, abbiamo usato l'aiogramma e googletrans
+bot telegram-username: t.me/None
